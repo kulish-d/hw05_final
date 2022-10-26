@@ -2,7 +2,7 @@ from django.core.cache import cache
 from django.test import TestCase, Client
 from django.urls import reverse
 
-from posts.models import Group, Post, User, Follow
+from posts.models import Post, User, Follow
 
 USERNAME1 = 'Dmitro-follow'
 USERNAME2 = 'Grigorii-follow'

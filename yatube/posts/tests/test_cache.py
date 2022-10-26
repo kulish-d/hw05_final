@@ -2,14 +2,12 @@ from django.test import TestCase, Client
 from django.urls import reverse
 from django.core.cache import cache
 
-from posts.models import Group, Post, User, Comment
+from posts.models import Post, User
 
 USERNAME = 'Dmitro-cache'
 TEXT = 'Тестовый пост для кэша'
 
 INDEX_URL = reverse('posts:index')
-
-
 
 
 class CacheTest(TestCase):
@@ -23,7 +21,7 @@ class CacheTest(TestCase):
             author=cls.user,
         )
 
-    def test_cache (self):
+    def test_cache(self):
         response_1 = self.guest_client.get(INDEX_URL)
         Post.objects.create(
             text='Тут какой-то текст (любой)',
