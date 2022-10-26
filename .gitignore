@@ -51,6 +51,9 @@ coverage.xml
 .hypothesis/
 .pytest_cache/
 
+yatube/static
+yatube/media
+
 # Translations
 *.mo
 *.pot
@@ -144,9 +147,3 @@ dmypy.json
 .history/
 
 .mypy_cache
-
-# папки со статикой и медиа
-static/
-yatube/posts/static/
-yatube/media/
-
