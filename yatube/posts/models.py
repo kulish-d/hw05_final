@@ -85,7 +85,10 @@ class Follow(models.Model):
         verbose_name='автор для подписки'
     )
 
-    models.UniqueConstraint(
-        name='unique_subscribe',
-        fields=['user', 'author'],
-    )
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(
+                name='unique_subscribe',
+                fields=['user', 'author'],
+            )
+        ]
