@@ -14,7 +14,10 @@ def get_page(request, post_list):
 
 def index(request):
     return render(request, 'posts/index.html', {
-        'page_obj': get_page(request, Post.objects.all()),
+        'page_obj': get_page(
+            request, Post.objects.select_related('group').all()
+        ),
+        'index': True,
     })
 
 
@@ -99,7 +102,8 @@ def follow_index(request):
             request, Post.objects.filter(
                 author__following__user=request.user
             ).all()
-        )
+        ),
+        'follow': True,
     })
 
 
@@ -107,11 +111,8 @@ def follow_index(request):
 def profile_follow(request, username):
     user = request.user
     author = get_object_or_404(User, username=username)
-    if author != user and not Follow.objects.filter(
-        user=user,
-        author=author
-    ).exists():
-        Follow.objects.create(
+    if author != user:
+        Follow.objects.get_or_create(
             user=user,
             author=author
         )
@@ -122,12 +123,8 @@ def profile_follow(request, username):
 def profile_unfollow(request, username):
     user = request.user
     author = get_object_or_404(User, username=username)
-    if author != user and Follow.objects.filter(
+    Follow.objects.filter(
         user=user,
         author=author
-    ).exists():
-        Follow.objects.get(
-            user=user,
-            author=author
-        ).delete()
+    ).delete()
     return redirect('posts:index')

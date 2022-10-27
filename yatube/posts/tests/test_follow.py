@@ -37,15 +37,24 @@ class StaticURLTests(TestCase):
 
     def test_follow_users(self):
         """Авторизованный пользователь может подписываться
-         на других пользователей и удалять их из подписок."""
+         на других пользователей"""
         follow_count = Follow.objects.count()
         response = self.author2.get(self.FOLLOW_URL)
         self.assertRedirects(response, INDEX_URL)
         self.assertEqual(Follow.objects.count(), follow_count + 1)
+        self.assertTrue(Follow.objects.filter(author=self.user1,
+                                              user=self.user2))
 
+    def test_unfollow_users(self):
+        """Авторизованный пользователь может удалять подписки."""
+        Follow.objects.get_or_create(
+            author=self.user1,
+            user=self.user2
+        )
         response = self.author2.get(self.UNFOLLOW_URL)
         self.assertRedirects(response, INDEX_URL)
-        self.assertEqual(Follow.objects.count(), follow_count)
+        self.assertFalse(Follow.objects.filter(author=self.user1,
+                                               user=self.user2))
 
     def post_appears_in_index_followers(self):
         """Новая запись пользователя появляется в ленте тех,
