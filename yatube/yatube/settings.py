@@ -6,13 +6,14 @@ TEMPLATES_DIR = os.path.join(BASE_DIR, 'templates')
 
 SECRET_KEY = 'bqe2fe5!fv%!x!7=gw42n-l(gl^my((c=564t4p#-le6b%1^49'
 
-DEBUG = True
+DEBUG = False
 
 CSRF_FAILURE_VIEW = 'core.views.csrf_failure'
 
 ALLOWED_HOSTS = [
     'localhost',
     '127.0.0.1',
+    '84.201.132.70',
     '[::1]',
     'testserver',
 ]
